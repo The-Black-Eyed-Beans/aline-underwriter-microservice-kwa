@@ -33,7 +33,13 @@ Resources:
               Value: '{{resolve:secretsmanager:aline-kwa/dev/secrets/user-credentials:SecretString:EncryptKey}}'
             - Name: JWT_SECRET_KEY
               Value: '{{resolve:secretsmanager:aline-kwa/dev/secrets/user-credentials:SecretString:JWTKey}}'
-
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: /ecs/aline-kwa/underwriter
+              awslogs-region: us-east-1
+              awslogs-stream-prefix: underwriter-kwa
+              awslogs-create-group: true
 
   Service:
     Type: AWS::ECS::Service
