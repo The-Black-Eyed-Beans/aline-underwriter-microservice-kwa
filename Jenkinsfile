@@ -57,8 +57,8 @@ pipeline {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'aws-key', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) {
     
                     sh "aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${AWS_USER_ID}.dkr.ecr.${REGION}.amazonaws.com"
-                    sh "docker tag kwa-${MICROSERVICE}:latest ${AWS_USER_ID}.dkr.ecr.${REGION}.amazonaws.com/kwa-${MICROSERVICE}:${COMMIT_HASH}"
-                    sh "docker push ${AWS_USER_ID}.dkr.ecr.${REGION}.amazonaws.com/kwa-${MICROSERVICE}:${COMMIT_HASH}"
+                    sh "docker tag kwa-${MICROSERVICE}:latest ${AWS_USER_ID}.dkr.ecr.${REGION}.amazonaws.com/kwa-${MICROSERVICE}:latest"
+                    sh "docker push ${AWS_USER_ID}.dkr.ecr.${REGION}.amazonaws.com/kwa-${MICROSERVICE}:latest"
                 
                 }
             }
@@ -78,7 +78,7 @@ pipeline {
         }
 
         cleanup {
-            sh "docker rmi ${AWS_USER_ID}.dkr.ecr.${REGION}.amazonaws.com/kwa-${MICROSERVICE}:${COMMIT_HASH}"
+            sh "docker rmi ${AWS_USER_ID}.dkr.ecr.${REGION}.amazonaws.com/kwa-${MICROSERVICE}:latest"
         }
     }
 }
